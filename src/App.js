@@ -3,6 +3,10 @@ import TeamComparisonComponent from './components/TeamComparisonComponent';
 import { getGameDetails, getTeamDetails } from './api';
 import './styles.css';
 
+
+// API docs: https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
+
+
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
