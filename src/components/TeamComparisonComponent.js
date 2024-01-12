@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import '../styles.css';
 
-const TeamComparisonComponent = ({ homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats }) => {
+const TeamComparisonComponent = ({ homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
   return (
     <>
       <div className="grid-container">
@@ -20,7 +20,7 @@ const TeamComparisonComponent = ({ homeTeamLogo, awayTeamLogo, homeTeam, awayTea
           <Grid item xs={ 6 }>
             <img src={ awayTeamLogo } alt={ `${awayTeam} Logo` } style={ { maxWidth: '100%', height: 'auto' } } />
             <Typography variant="h5" gutterBottom style={ { textAlign: 'center' } }>
-              { awayTeam }
+              { awayTeam } { dateRange }
             </Typography>
           </Grid>
         </Grid>
