@@ -20,7 +20,7 @@ const TeamComparisonComponent = ({ homeTeamLogo, awayTeamLogo, homeTeam, awayTea
           <Grid item xs={ 6 }>
             <img src={ awayTeamLogo } alt={ `${awayTeam} Logo` } style={ { maxWidth: '100%', height: 'auto' } } />
             <Typography variant="h5" gutterBottom style={ { textAlign: 'center' } }>
-              { awayTeam } { dateRange }
+              { awayTeam }
             </Typography>
           </Grid>
         </Grid>

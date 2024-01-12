@@ -118,7 +118,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    // Example usage:
+    // Example usage ... need inputDate to be /now... so, today...
     const inputDate = '2022-01-15';
     const daysBefore = 2;
     const daysAfter = 2;

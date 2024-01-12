@@ -38,4 +38,4 @@ const daysBefore = 2;
 const daysAfter = 2;
 
 const dateRange = generateDateRange(inputDate, daysBefore, daysAfter);
-console.log(dateRange);
+// console.log(dateRange);
