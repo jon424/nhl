@@ -4,6 +4,10 @@ import { getGameDetails, getTeamDetails } from './api';
 import { generateDateRange } from './util/dates';
 import './styles.css';
 
+// https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
+
+// https://github.com/Zmalski/NHL-API-Reference
+
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
@@ -31,6 +35,7 @@ const App = () => {
       }
     };
 
+    // game date
     if (games && games.length > 0 && !previousDate) {
       setPreviousDate(games[0].gameDate);
     }
@@ -67,6 +72,10 @@ const App = () => {
             awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
             homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
             awayTeam={ getTeamFullName(game.awayTeam?.id) || 'defaultAwayTeamName' }
+            homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '' }
+            awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '' }
+
+
             recentGameScore={ '3 - 2' } // Example score
             stats={ {
               shots: '30 - 25',
