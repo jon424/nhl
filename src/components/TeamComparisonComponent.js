@@ -1,13 +1,17 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { convertToEasternAndPacific } from '../util/times';
 
 import '../styles.css';
 
-const TeamComparisonComponent = ({ date, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
+const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
+  const utcTime = startTime;
+  const { easternTime, pacificTime } = convertToEasternAndPacific(utcTime);
   return (
     <>
       <div className="grid-container">
+        <p>{ easternTime }...{ pacificTime }</p>
         <Grid container spacing={ 3 }>
           {/* Team 1 */ }
           <Grid item xs={ 6 }>

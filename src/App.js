@@ -10,6 +10,7 @@ const App = () => {
   const [previousDate, setPreviousDate] = useState(null);
 
   const games = upcomingGameDetails?.data?.games;
+  console.log(games);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +62,7 @@ const App = () => {
           { index === 0 && <h1>{ game.gameDate }</h1> }
           <TeamComparisonComponent
             date={ game.gameDate }
+            startTime={ game.startTimeUTC }
             homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
             awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
             homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
