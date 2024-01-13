@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import '../styles.css';
 
-const TeamComparisonComponent = ({ homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
+const TeamComparisonComponent = ({ date, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
   return (
     <>
       <div className="grid-container">
