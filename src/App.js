@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
 import { getGameDetails, getTeamDetails } from './api';
 import { generateDateRange } from './util/dates';
@@ -15,17 +16,9 @@ const App = () => {
   const games = upcomingGameDetails?.data?.games; // <-- data that is returned from getGameDetails()
   console.log({ games }); // Array ... games[0].games (for one date) and games[1].games for the next
 
-  // const today = new Date();
-  // const year = today.getFullYear();
-  // const month = (today.getMonth() + 1).toString().padStart(2, '0');
-  // const day = today.getDate().toString().padStart(2, '0');
-
-  // const todaysDate = `${year}-${month}-${day}`;
-  // const gameIsToday = games && games.length > 0 && games.some(game => game?.gameDate === todaysDate);
-
-  // const dates = ['2023-12-15', '2023-12-14', '2023-12-13'];
-
-  const dates = ['now', '2024-01-12']; // need to get starting/ending dates of season...
+  // const dates = generateDateRange('2023-10-10', '2024-04-18'); // all dates for season
+  const dates = ['2024-01-13', '2024-01-12'];
+  console.log({ dates });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +65,7 @@ const App = () => {
   console.log('Games:', games);
   return (
     <>
+      <Navbar />
       <div>
         {/* <h1>{ gameIsToday ? `Today's Games` : 'gameDate' }</h1> */ }
         {/* <h1>Today's games</h1> */ }
