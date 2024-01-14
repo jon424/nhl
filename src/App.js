@@ -25,7 +25,7 @@ const App = () => {
 
   // const dates = ['2023-12-15', '2023-12-14', '2023-12-13'];
 
-  const dates = ['now', '2024-01-12'];
+  const dates = ['now', '2024-01-12']; // need to get starting/ending dates of season...
 
   useEffect(() => {
     const fetchData = async () => {
