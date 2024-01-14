@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
 import { getGameDetails, getTeamDetails } from './api';
-import { generateDateRange } from './util/dates';
+import { generateDateRanges, isFutureDate, isPastDate } from './util/dates';
 import './styles.css';
 
 // https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
@@ -20,6 +20,19 @@ const App = () => {
   // need games for todaysDate
   // previous games from yesterday until the beginning of season
   // future games from tomorrow to the end of the season
+
+  const { dateRangeFromYesterday, dateRangeFromTomorrow } = generateDateRanges('2023-10-10', '2024-04-18');
+  // console.log('Date Range from Yesterday:', dateRangeFromYesterday);
+  // console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
+
+  // Example usage:
+  const futureDate = '2024-10-10';
+  const pastDate = '2024-01-01';
+  console.log(isFutureDate(futureDate)); //  true
+  console.log(isFutureDate(pastDate));   //  false
+  console.log(isPastDate(futureDate));    //  false
+  console.log(isPastDate(pastDate));      //  true
+
   const dates = ['2024-01-13', '2024-01-12'];
   console.log({ dates });
 
@@ -86,7 +99,6 @@ const App = () => {
                     possession: '60% - 40%',
                     // Add more stats as needed
                   } }
-                  dateRange={ generateDateRange(game.gameDate, 3, 3) } // Pass dateRange to the TeamComparisonComponent
                 />
               ))
             }
