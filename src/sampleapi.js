@@ -1,22 +1,23 @@
-const axios = require('axios');
-const API_URL = 'https://example.com/';
-const dateRange = ['2022-01-01', '2022-01-02', '2022-01-03']; // Replace with your actual date range
+import axios from 'axios';
 
-async function fetchDataForDate(date) {
-    const endpoint = `${API_URL}/${date}`;
+const API_URL = 'https://api-web.nhle.com/v1';
 
+export const getGameDetails = async (dates) => {
     try {
-        const response = await axios.get(endpoint);
-        const data = response.data;
+        // Use Promise.all to make parallel requests for each date
+        const responses = await Promise.all(
+            dates.map(async (date) => {
+                return axios.get(`${API_URL}/score/${date}`, { followRedirects: true });
+            })
+        );
 
-        // Process the data for the current date
-        console.log(`Data for ${date}:`, data);
-    } catch (error) {
-        console.error(`Error fetching data for ${date}:`, error);
+        // Extract the data from each response
+        const gameDetails = responses.map((response) => response.data);
+
+        // Return the compiled game details
+        return { data: { games: [].concat(...gameDetails) } };
+    } catch (err) {
+        console.error('Error fetching Game Details data: ', err);
+        throw err;
     }
-}
-
-// Make requests for each date in the date range
-for (const date of dateRange) {
-    fetchDataForDate(date);
-}
+};
