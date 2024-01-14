@@ -11,7 +11,6 @@ import './styles.css';
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
-  const [previousDate, setPreviousDate] = useState(null);
 
   const games = upcomingGameDetails?.data?.games;
   console.log(games);
@@ -45,14 +44,10 @@ const App = () => {
       }
     };
 
-    // game date
-    if (games && games.length > 0 && !previousDate) {
-      setPreviousDate(games[0].gameDate);
-    }
-
     fetchTeamDetails();
     fetchData();
-  }, [games, previousDate]);
+  }, [games
+  ]);
 
   // Check if upcomingGameDetails and games array exist
   if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {

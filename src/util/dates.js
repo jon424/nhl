@@ -32,10 +32,4 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
-// Example usage:
-const inputDate = '2022-01-15';
-const daysBefore = 2;
-const daysAfter = 2;
 
-const dateRange = generateDateRange(inputDate, daysBefore, daysAfter);
-// console.log(dateRange);

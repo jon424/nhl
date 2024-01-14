@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'https://api-web.nhle.com/v1';
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
-const differentDay = '2024-01-12';
+// const differentDay = '2024-01-12';
 
 export const getGameDetails = async () => {
     try {
