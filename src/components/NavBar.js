@@ -49,12 +49,12 @@ const Navbar = () => {
                     </Typography>
                     { !isMobile && (
                         <>
-                            <Button color="inherit">Home</Button>
-                            <Button color="inherit">Today's Games</Button>
-                            <Button color="inherit">Previous Games</Button>
-                            <Button color="inherit">Future Games</Button>
-                            <Button color="inherit">GitHub</Button>
-                            <Button color="inherit">Buy Me A Coffee</Button>
+                            <Button className="navbar-btn" color="inherit">Home</Button>
+                            <Button className="navbar-btn" color="inherit">Today's Games</Button>
+                            <Button className="navbar-btn" color="inherit">Previous Games</Button>
+                            <Button className="navbar-btn" color="inherit">Future Games</Button>
+                            <Button className="navbar-btn" color="inherit">GitHub</Button>
+                            <Button className="navbar-btn" color="inherit">Buy Me A Coffee</Button>
                         </>
                     ) }
                 </Toolbar>

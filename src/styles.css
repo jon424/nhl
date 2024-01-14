@@ -2,6 +2,11 @@
     margin-top: 6rem;
 }
 
+.navbar-btn {
+    border-radius: 0 !important;
+    border-right: 1px solid lightgrey !important;
+}
+
 .grid-container {
     border: 1px solid lightgrey;
     border-radius: 12px;
