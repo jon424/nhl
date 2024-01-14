@@ -13,10 +13,13 @@ const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
 
-  const games = upcomingGameDetails?.data?.games; //
+  const games = upcomingGameDetails?.data?.games;
   console.log({ games }); //
 
   // const dates = generateDateRange('2023-10-10', '2024-04-18'); // all dates for season
+  // need games for todaysDate
+  // previous games from yesterday until the beginning of season
+  // future games from tomorrow to the end of the season
   const dates = ['2024-01-13', '2024-01-12'];
   console.log({ dates });
 

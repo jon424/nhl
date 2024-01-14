@@ -4,7 +4,8 @@
 
 .navbar-btn {
     border-radius: 0 !important;
-    border-right: 1px solid lightgrey !important;
+    border-right: 1px solid white !important;
+    line-height: 0.75px !important;
 }
 
 .grid-container {
