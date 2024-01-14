@@ -13,8 +13,8 @@ const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
 
-  const games = upcomingGameDetails?.data?.games; // <-- data that is returned from getGameDetails()
-  console.log({ games }); // Array ... games[0].games (for one date) and games[1].games for the next
+  const games = upcomingGameDetails?.data?.games; //
+  console.log({ games }); //
 
   // const dates = generateDateRange('2023-10-10', '2024-04-18'); // all dates for season
   const dates = ['2024-01-13', '2024-01-12'];
@@ -23,18 +23,12 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const fetchGameDetails = await getGameDetails(); // fetchGameDetails{}
         const fetchGameDetails = await getGameDetails(dates);
-        // console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
-        console.log({ upcomingGameDetails });
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
       }
     };
-
-
-
 
     const fetchTeamDetails = async () => {
       try {
@@ -47,11 +41,11 @@ const App = () => {
 
     fetchTeamDetails();
     fetchData();
-  }, [games, dates]);
+  }, []); // Only dates is in the dependency array now
 
   // Check if upcomingGameDetails and games array exist
   if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {
-    // Return a loading state or handle the absence of data
+    // TODO: make spinner
     return <p>Loading...</p>;
   }
 
@@ -66,39 +60,38 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <div>
-        {/* <h1>{ gameIsToday ? `Today's Games` : 'gameDate' }</h1> */ }
-        {/* <h1>Today's games</h1> */ }
+
+      <div className="app-container">
+        { games.map((dateInfo, dateIndex) => (
+          <div key={ dateIndex }>
+            <h1>{ dateInfo.currentDate }</h1>
+            {
+              dateInfo.games.map((game, index) => (
+                <TeamComparisonComponent
+                  key={ index }
+                  date={ game.gameDate }
+                  startTime={ game.startTimeUTC }
+                  homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
+                  awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
+                  homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
+                  awayTeam={ getTeamFullName(game.awayTeam?.id) || 'defaultAwayTeamName' }
+                  homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
+                  awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
+                  recentGameScore={ '3 - 2' } // Example score
+                  stats={ {
+                    shots: '30 - 25',
+                    possession: '60% - 40%',
+                    // Add more stats as needed
+                  } }
+                  dateRange={ generateDateRange(game.gameDate, 3, 3) } // Pass dateRange to the TeamComparisonComponent
+                />
+              ))
+            }
+          </div >
+        )) }
       </div>
-      { games.map((dateInfo, dateIndex) => (
-        <div key={ dateIndex }>
-          <h1>{ dateInfo.currentDate }</h1>
-          { dateInfo.games.map((game, index) => (
-            <TeamComparisonComponent
-              key={ index }
-              date={ game.gameDate }
-              startTime={ game.startTimeUTC }
-              homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
-              awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
-              homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
-              awayTeam={ getTeamFullName(game.awayTeam?.id) || 'defaultAwayTeamName' }
-              homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
-              awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
-              recentGameScore={ '3 - 2' } // Example score
-              stats={ {
-                shots: '30 - 25',
-                possession: '60% - 40%',
-                // Add more stats as needed
-              } }
-              dateRange={ generateDateRange(game.gameDate, 3, 3) } // Pass dateRange to the TeamComparisonComponent
-            />
-          )) }
-        </div>
-      )) }
     </>
   );
-
-
 };
 
 export default App;
