@@ -5,6 +5,6 @@
     padding: 12px 16px;
 }
 
-h6 {
-    font-size: 2.25rem;
+.team-score {
+    font-size: 2.25rem !important;
 }

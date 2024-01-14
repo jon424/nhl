@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const API_URL = 'https://api-web.nhle.com/v1';
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
+const differentDay = '2024-01-12';
 
 export const getGameDetails = async () => {
     try {
         const res = await axios.get(`${API_URL}/score/now`, { followRedirects: true });
+        // const res = await axios.get(`${API_URL}/score/${differentDay}`, { followRedirects: true });
         return res;
     } catch (err) {
         console.error('Error fetching Game Details data: ', err);

@@ -16,6 +16,16 @@ const App = () => {
   const games = upcomingGameDetails?.data?.games;
   console.log(games);
 
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+
+  const todaysDate = `${year}-${month}-${day}`;
+  const gameIsToday = games && games.length > 0 && games.some(game => game?.gameDate === todaysDate);
+
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,11 +70,12 @@ const App = () => {
   return (
     <>
       <div>
-        <h1>Upcoming Games</h1>
+        <h1>{ gameIsToday ? `Today's Games` : 'gameDate' }</h1>
+        {/* <h1>Today's games</h1> */ }
       </div>
       { games.map((game, index) => (
         <div key={ index }>
-          { index === 0 && <h1>{ game.gameDate }</h1> }
+          { index === 0 && <h1>{ game.gameDate }????????????????????</h1> }
           <TeamComparisonComponent
             date={ game.gameDate }
             startTime={ game.startTimeUTC }
@@ -72,8 +83,8 @@ const App = () => {
             awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
             homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
             awayTeam={ getTeamFullName(game.awayTeam?.id) || 'defaultAwayTeamName' }
-            homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '' }
-            awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '' }
+            homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
+            awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
 
 
             recentGameScore={ '3 - 2' } // Example score

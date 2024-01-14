@@ -1,54 +1,3 @@
-// import React from 'react';
-// import Grid from '@mui/material/Grid';
-// import Typography from '@mui/material/Typography';
-// import { convertToEasternAndPacific } from '../util/times';
-
-// import '../styles.css';
-
-// const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, recentGameScore, stats, dateRange }) => {
-//   const utcTime = startTime;
-//   const { easternTime, pacificTime } = convertToEasternAndPacific(utcTime);
-//   return (
-//     <>
-//       <div className="grid-container">
-//         <p>{ easternTime }...{ pacificTime }</p>
-//         <Grid container spacing={ 3 }>
-//           {/* Team 1 */ }
-//           <Grid item xs={ 6 }>
-//             <img src={ homeTeamLogo } alt={ `${homeTeam} Logo` } style={ { maxWidth: '100%', height: 'auto' } } />
-//             <Typography variant="h5" gutterBottom style={ { textAlign: 'center' } }>
-//               { homeTeam }
-//             </Typography>
-//           </Grid>
-//           {/* Team 2 */ }
-//           <Grid item xs={ 6 }>
-//             <img src={ awayTeamLogo } alt={ `${awayTeam} Logo` } style={ { maxWidth: '100%', height: 'auto' } } />
-//             <Typography variant="h5" gutterBottom style={ { textAlign: 'center' } }>
-//               { awayTeam }
-//             </Typography>
-//           </Grid>
-//         </Grid>
-
-//         {/* Final Scores */ }
-//         <Typography variant="h5" gutterBottom style={ { textAlign: 'center' } }>
-//           Final Score: { recentGameScore }
-//         </Typography>
-
-//         {/* Stats */ }
-//         <div>
-//           { Object.entries(stats).map(([key, value]) => (
-//             <Typography key={ key } variant="body2" color="textSecondary" gutterBottom>
-//               { `${key}: ${value}` }
-//             </Typography>
-//           )) }
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default TeamComparisonComponent;
-
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -56,15 +5,12 @@ import { convertToEasternAndPacific } from '../util/times';
 
 import '../styles.css';
 
-// ... (import statements)
-
-const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, homeTeamScore, awayTeamScore, recentGameScore, stats, dateRange }) => {
+const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, homeTeamScore, awayTeamScore, stats, dateRange }) => {
   const utcTime = startTime;
   const { easternTime, pacificTime } = convertToEasternAndPacific(utcTime);
 
   return (
     <div className="grid-container">
-      <p>{ easternTime }...{ pacificTime }</p>
       <Grid container spacing={ 3 }>
         {/* Team 1 */ }
         <Grid item xs={ 6 } container direction="column" alignItems="center">
@@ -73,7 +19,7 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
             { homeTeam }
           </Typography>
           {/* Display the score for Team 1 */ }
-          <Typography variant="h6" gutterBottom style={ { textAlign: 'center' } }>
+          <Typography className="team-score" variant="h6" gutterBottom style={ { textAlign: 'center' } }>
             { homeTeamScore }
           </Typography>
         </Grid>
@@ -85,7 +31,7 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
             { awayTeam }
           </Typography>
           {/* Display the score for Team 2 */ }
-          <Typography variant="h6" gutterBottom style={ { textAlign: 'center' } }>
+          <Typography className="team-score" variant="h6" gutterBottom style={ { textAlign: 'center' } }>
             { awayTeamScore }
           </Typography>
         </Grid>
@@ -93,6 +39,8 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
 
       {/* Stats */ }
       <div>
+        {/* <p>{ date === todaysDate ? 'Today at ' : date } { easternTime } ET | { pacificTime } PT</p> */ }
+        <p>{ easternTime } ET | { pacificTime } PT</p>
         { Object.entries(stats).map(([key, value]) => (
           <Typography key={ key } variant="body2" color="textSecondary" gutterBottom>
             { `${key}: ${value}` }
