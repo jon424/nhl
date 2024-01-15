@@ -43,9 +43,9 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Period</TableCell>
-                        <TableCell align="right">Goals</TableCell>
-                        <TableCell align="right">Scorer</TableCell>
-                        <TableCell align="right">Game Score</TableCell>
+                        <TableCell align="left">Goals</TableCell>
+                        {/* <TableCell align="right">Scorer</TableCell> */ }
+                        <TableCell align="left">Game Score</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -54,10 +54,11 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
                             <TableCell component="th" scope="row">
                                 { row.period }
                             </TableCell>
-                            <TableCell align="right">
-                                { row.homeScore } - { row.awayScore }
-                            </TableCell>
-                            <TableCell align="right">
+                            {/* <TableCell align="right">
+                                { homeTeam } - { row.homeScore }<br />{ awayTeam } - { row.awayScore }
+                            </TableCell> */}
+
+                            <TableCell align="left">
                                 { row.scorers.map((scorer, index) => (
                                     <div key={ index }>
                                         <img src={ scorer.mugshot } alt={ scorer.name || 'Unknown' } width="30" height="30" />
@@ -65,7 +66,7 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
                                     </div>
                                 )) }
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="left">
                                 { homeTeam } - { row.homeScore }<br />{ awayTeam } - { row.awayScore }
                             </TableCell>
                         </TableRow>
