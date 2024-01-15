@@ -20,6 +20,25 @@ const App = () => {
   console.log('Date Range from Yesterday:', dateRangeFromYesterday);
   console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
 
+  const handleNavbarButtonClick = async (buttonText) => {
+    try {
+      let fetchGameDetails;
+
+      if (buttonText === 'Today') {
+        fetchGameDetails = await getTodaysGameDetails();
+      } else if (buttonText === 'Previous') {
+        fetchGameDetails = await getGameDetails(dateRangeFromYesterday);
+      } else if (buttonText === 'Future') {
+        fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
+      }
+
+      console.log({ fetchGameDetails });
+      setUpcomingGameDetails(fetchGameDetails);
+    } catch (err) {
+      console.error('Error fetching game details: ', err);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,18 +51,18 @@ const App = () => {
       }
     };
 
-    const fetchTeamDetails = async () => {
-      try {
-        const fetchTeamDetails = await getTeamDetails();
-        setTeamDetails(fetchTeamDetails);
-      } catch (err) {
-        console.error('Error fetching team details: ', err);
-      }
-    };
+    // const fetchTeamDetails = async () => {
+    //   try {
+    //     const fetchTeamDetails = await getTeamDetails();
+    //     setTeamDetails(fetchTeamDetails);
+    //   } catch (err) {
+    //     console.error('Error fetching team details: ', err);
+    //   }
+    // };
 
-    fetchTeamDetails();
+    // fetchTeamDetails();
     fetchData();
-  }, []); // Only dates is in the dependency array now
+  }, []);
 
   // Check if upcomingGameDetails and games array exist
   if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {
@@ -61,7 +80,7 @@ const App = () => {
   console.log('Games:', games);
   return (
     <>
-      <Navbar />
+      <Navbar onNavbarButtonClick={ handleNavbarButtonClick } />
 
       <div className="app-container">
         { games.map((dateInfo, dateIndex) => (

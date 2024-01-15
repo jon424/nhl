@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const Navbar = () => {
+const Navbar = ({ onNavbarButtonClick }) => {
     const isMobile = useMediaQuery('(max-width:600px)');
     const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -50,9 +50,9 @@ const Navbar = () => {
                     { !isMobile && (
                         <>
                             <Button className="navbar-btn" color="inherit">Home</Button>
-                            <Button className="navbar-btn" color="inherit">Today's Games</Button>
-                            <Button className="navbar-btn" color="inherit">Previous Games</Button>
-                            <Button className="navbar-btn" color="inherit">Future Games</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Today') } className="navbar-btn" color="inherit">Today's Games</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Previous') } className="navbar-btn" color="inherit">Previous Games</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Future') } className="navbar-btn" color="inherit">Future Games</Button>
                             <Button className="navbar-btn" color="inherit">GitHub</Button>
                             <Button className="navbar-btn" color="inherit">Buy Me A Coffee</Button>
                         </>
