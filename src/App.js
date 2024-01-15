@@ -22,24 +22,24 @@ const App = () => {
   // future games from tomorrow to the end of the season
 
   const { dateRangeFromYesterday, dateRangeFromTomorrow } = generateDateRanges('2023-10-10', '2024-04-18');
-  // console.log('Date Range from Yesterday:', dateRangeFromYesterday);
-  // console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
+  console.log('Date Range from Yesterday:', dateRangeFromYesterday);
+  console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
 
   // Example usage:
-  const futureDate = '2024-10-10';
-  const pastDate = '2024-01-01';
-  console.log(isFutureDate(futureDate)); //  true
-  console.log(isFutureDate(pastDate));   //  false
-  console.log(isPastDate(futureDate));    //  false
-  console.log(isPastDate(pastDate));      //  true
+  // const futureDate = '2024-10-10';
+  // const pastDate = '2024-01-01';
+  // console.log(isFutureDate(futureDate)); //  true
+  // console.log(isFutureDate(pastDate));   //  false
+  // console.log(isPastDate(futureDate));    //  false
+  // console.log(isPastDate(pastDate));      //  true
 
-  const dates = ['2024-01-13', '2024-01-12'];
-  console.log({ dates });
+  // const dates = ['2024-01-13', '2024-01-12'];
+  // console.log({ dates });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchGameDetails = await getGameDetails(dates);
+        const fetchGameDetails = await getGameDetails(['2024-04-18']);
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
