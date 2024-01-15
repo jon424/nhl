@@ -1,12 +1,14 @@
 import axios from 'axios';
+import { getTodaysDate } from './util/dates';
 
 const API_URL = 'https://api-web.nhle.com/v1';
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
 // const differentDay = '2023-12-15';
 
 export const getTodaysGameDetails = async () => {
+    const today = getTodaysDate();
     try {
-        const res = await axios.get(`${API_URL}/score/2024-01-15`, { followRedirects: true });
+        const res = await axios.get(`${API_URL}/score/${today}`, { followRedirects: true });
         console.log({ res });
         // return res;
         const gameDetails = res.data;

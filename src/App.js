@@ -23,8 +23,8 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
-        // const fetchGameDetails = await getTodaysGameDetails();
+        // const fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
+        const fetchGameDetails = await getTodaysGameDetails();
         console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {

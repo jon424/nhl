@@ -45,6 +45,19 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
+export const getTodaysDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
+// Example usage:
+const todayDate = getTodaysDate();
+console.log(todayDate);
+
+
 // Function to check if a date is in the future
 // export const isFutureDate = (dateString) => {
 //     const currentDate = new Date();
