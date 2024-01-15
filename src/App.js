@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
-import { getGameDetails, getTeamDetails } from './api';
+import { getGameDetails, getTodaysGameDetails, getTeamDetails } from './api';
 import { generateDateRanges } from './util/dates';
 import './styles.css';
 
@@ -24,6 +24,8 @@ const App = () => {
     const fetchData = async () => {
       try {
         const fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
+        // const fetchGameDetails = await getTodaysGameDetails();
+        console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
@@ -64,7 +66,7 @@ const App = () => {
       <div className="app-container">
         { games.map((dateInfo, dateIndex) => (
           <div key={ dateIndex }>
-            { dateInfo.games.length > 0 && (
+            { dateInfo.games?.length > 0 && (
               <>
                 <h1>{ dateInfo.currentDate }</h1>
                 { dateInfo.games.map((game, index) => (
