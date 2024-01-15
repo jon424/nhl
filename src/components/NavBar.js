@@ -29,6 +29,10 @@ const Navbar = ({ onNavbarButtonClick }) => {
         setOpenDrawer(open);
     };
 
+    const handleHomeButtonClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <>
             <CssBaseline />
@@ -49,12 +53,23 @@ const Navbar = ({ onNavbarButtonClick }) => {
                     </Typography>
                     { !isMobile && (
                         <>
-                            <Button className="navbar-btn" color="inherit">Home</Button>
+                            <Button
+                                className="navbar-btn"
+                                color="inherit"
+                                onClick={ handleHomeButtonClick }
+                            >
+                                Home
+                            </Button>
                             <Button onClick={ () => onNavbarButtonClick('Today') } className="navbar-btn" color="inherit">Today's Games</Button>
                             <Button onClick={ () => onNavbarButtonClick('Previous') } className="navbar-btn" color="inherit">Previous Games</Button>
                             <Button onClick={ () => onNavbarButtonClick('Future') } className="navbar-btn" color="inherit">Future Games</Button>
-                            <Button className="navbar-btn" color="inherit">GitHub</Button>
-                            <Button className="navbar-btn" color="inherit">Buy Me A Coffee</Button>
+                            <Button className="navbar-btn" color="inherit" component="a" href="https://github.com/jon424/nhl" target="_blank" rel="noopener noreferrer">
+                                GitHub
+                            </Button>
+                            <Button className="navbar-btn" color="inherit" component="a" href="https://www.buymeacoffee.com/jonathanja7" target="_blank" rel="noopener noreferrer">
+                                Buy Me A Coffee
+                            </Button>
+
                         </>
                     ) }
                 </Toolbar>
