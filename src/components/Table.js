@@ -66,7 +66,7 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
                                 )) }
                             </TableCell>
                             <TableCell align="right">
-                                { row.homeScore } - { row.awayScore }
+                                { homeTeam } - { row.homeScore }<br />{ awayTeam } - { row.awayScore }
                             </TableCell>
                         </TableRow>
                     )) }
