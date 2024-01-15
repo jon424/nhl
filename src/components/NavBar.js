@@ -82,7 +82,7 @@ const Navbar = ({ onNavbarButtonClick }) => {
             >
                 <List>
                     { ['Home', `Today's Games`, `Previous Games`, `Future Games`, `GitHub`, `Buy Me A Coffee`].map((text, index) => (
-                        <ListItem button key={ text } onClick={ toggleDrawer(false) }>
+                        <ListItem button key={ text } onClick={ () => { toggleDrawer(false); onNavbarButtonClick(text); } }>
                             <ListItemText primary={ text } />
                         </ListItem>
                     )) }

@@ -2,16 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
 import { getGameDetails, getTodaysGameDetails, getTeamDetails } from './api';
-import { generateDateRanges } from './util/dates';
+import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
-
-// https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
-
-// https://github.com/Zmalski/NHL-API-Reference
 
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
   const [teamDetails, setTeamDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const games = upcomingGameDetails?.data?.games;
   console.log({ games });
@@ -21,6 +18,8 @@ const App = () => {
   console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
 
   const handleNavbarButtonClick = async (buttonText) => {
+    setLoading(true);
+
     try {
       let fetchGameDetails;
 
@@ -36,21 +35,25 @@ const App = () => {
       setUpcomingGameDetails(fetchGameDetails);
     } catch (err) {
       console.error('Error fetching game details: ', err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
         const fetchGameDetails = await getTodaysGameDetails();
         console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
+      } finally {
+        setLoading(false);
       }
     };
 
+    // API is down for this :-(
     // const fetchTeamDetails = async () => {
     //   try {
     //     const fetchTeamDetails = await getTeamDetails();
@@ -61,16 +64,18 @@ const App = () => {
     // };
 
     // fetchTeamDetails();
+
     fetchData();
   }, []);
 
-  // Check if upcomingGameDetails and games array exist
-  if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {
-    // TODO: make spinner
+  if (loading) {
     return <p>Loading...</p>;
   }
 
-  // Function to find team name based on team ID
+  if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {
+    return <p>No games available.</p>;
+  }
+
   const getTeamFullName = (teamId) => {
     const teamDetailsForId = teamDetails?.data?.data;
     const matchingTeam = teamDetailsForId?.find((team) => team.id === teamId);
@@ -78,6 +83,7 @@ const App = () => {
   };
 
   console.log('Games:', games);
+
   return (
     <>
       <Navbar onNavbarButtonClick={ handleNavbarButtonClick } />
@@ -87,8 +93,9 @@ const App = () => {
           <div key={ dateIndex }>
             { dateInfo.games?.length > 0 && (
               <>
-                <h1>{ dateInfo.currentDate }</h1>
+                <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games?.length > 1 ? `Today's Games` : dateInfo.currentDate === getTodaysDate() ? `Today's Game` : dateInfo.currentDate }</h1>
                 { dateInfo.games.map((game, index) => (
+                  // need game.goals is [] .... game.goals.period .mugshot .name.default
                   <TeamComparisonComponent
                     key={ index }
                     date={ game.gameDate }
@@ -97,13 +104,13 @@ const App = () => {
                     awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
                     homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
                     awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
+                    goals={ game.goals }
                     homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
                     awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
                     recentGameScore={ '3 - 2' } // Example score
                     stats={ {
                       shots: '30 - 25',
                       possession: '60% - 40%',
-                      // Add more stats as needed
                     } }
                   />
                 )) }
@@ -112,7 +119,6 @@ const App = () => {
           </div>
         )) }
       </div>
-
     </>
   );
 };

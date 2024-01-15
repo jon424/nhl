@@ -24,6 +24,10 @@
   .team-score {
     font-size: 2.25rem !important;
   }
+
+  thead th {
+    font-weight: 600 !important;
+  }
   
   @media (max-width: 416px) {
     .grid-container {

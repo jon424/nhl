@@ -1,13 +1,16 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Table from './Table';
 import { convertToEasternAndPacific } from '../util/times';
 
 import '../styles.css';
 
-const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, homeTeamScore, awayTeamScore, stats, dateRange }) => {
+const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, homeTeam, awayTeam, goals, homeTeamScore, awayTeamScore, stats, dateRange }) => {
   const utcTime = startTime;
   const { easternTime, pacificTime } = convertToEasternAndPacific(utcTime);
+
+  console.log('shoots? scores?: ', goals);
 
   return (
     <div className="grid-container">
@@ -40,6 +43,8 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
           </div>
         </Grid>
       </Grid>
+
+      <div className="table-container"><Table data={ goals } /></div>
 
       {/* Stats */ }
       <div>
