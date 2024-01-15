@@ -44,7 +44,7 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
         </Grid>
       </Grid>
 
-      <div className="table-container"><Table data={ goals } /></div>
+      <div className="table-container"><Table homeTeam={ homeTeam } awayTeam={ awayTeam } goals={ goals } /></div>
 
       {/* Stats */ }
       <div>

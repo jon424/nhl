@@ -7,11 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function BasicTable(goals) {
-    console.log('this is the goals.data: ', goals.data);
+export default function BasicTable({ homeTeam, awayTeam, goals }) {
+    console.log('this is the goals.data: ', goals);
 
     // Group goals by period
-    const groupedGoals = goals.data?.reduce((acc, goal) => {
+    const groupedGoals = goals?.reduce((acc, goal) => {
         const period = goal.period;
         if (!acc[period]) {
             acc[period] = [];
@@ -65,7 +65,9 @@ export default function BasicTable(goals) {
                                     </div>
                                 )) }
                             </TableCell>
-                            <TableCell align="right">{ row.gameScore }</TableCell>
+                            <TableCell align="right">
+                                { row.homeScore } - { row.awayScore }
+                            </TableCell>
                         </TableRow>
                     )) }
                 </TableBody>
