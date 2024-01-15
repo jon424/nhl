@@ -53,7 +53,7 @@ const App = () => {
   const getTeamFullName = (teamId) => {
     const teamDetailsForId = teamDetails?.data?.data;
     const matchingTeam = teamDetailsForId?.find((team) => team.id === teamId);
-    return matchingTeam?.fullName || `Team with ID ${teamId} not found`;
+    return matchingTeam?.fullName || null;
   };
 
   console.log('Games:', games);
@@ -74,8 +74,8 @@ const App = () => {
                     startTime={ game.startTimeUTC }
                     homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
                     awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
-                    homeTeam={ getTeamFullName(game.homeTeam?.id) || 'defaultHomeTeamName' }
-                    awayTeam={ getTeamFullName(game.awayTeam?.id) || 'defaultAwayTeamName' }
+                    homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
+                    awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
                     homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
                     awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
                     recentGameScore={ '3 - 2' } // Example score
