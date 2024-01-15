@@ -49,11 +49,11 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
       {/* Stats */ }
       <div>
         <p>{ easternTime } ET | { pacificTime } PT</p>
-        { Object.entries(stats).map(([key, value]) => (
+        {/* { Object.entries(stats).map(([key, value]) => (
           <Typography key={ key } variant="body2" color="textSecondary" gutterBottom>
             { `${key}: ${value}` }
           </Typography>
-        )) }
+        )) } */}
       </div>
     </div>
   );
