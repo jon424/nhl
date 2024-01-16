@@ -73,10 +73,6 @@ const App = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   if (!upcomingGameDetails || !upcomingGameDetails.data || !games || games.length === 0) {
     return <p>No games available.</p>;
   }
@@ -92,7 +88,7 @@ const App = () => {
   return (
     <>
       <Navbar onNavbarButtonClick={ handleNavbarButtonClick } />
-
+      { loading && <LoadingSpinner /> }
       <div className="app-container">
         { games.map((dateInfo, dateIndex) => (
           <div key={ dateIndex }>
