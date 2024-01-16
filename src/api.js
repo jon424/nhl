@@ -52,8 +52,8 @@
 import axios from 'axios';
 import { getTodaysDate } from './util/dates';
 
-// const API_URL = '/api/v1'; // Change to the proxy path
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = '/api/v1'; // Change to the proxy path
+// const API_URL = process.env.REACT_APP_API_URL;
 console.log({ API_URL });
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
 
