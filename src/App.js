@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
+import LoadingSpinner from './components/LoadingSpinner';
 import { getGameDetails, getTodaysGameDetails, getTeamDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
+
+//https://github.com/Zmalski/NHL-API-Reference
+//https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
+
 
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
@@ -69,10 +74,10 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
-  if (!upcomingGameDetails || !upcomingGameDetails.data || !games) {
+  if (!upcomingGameDetails || !upcomingGameDetails.data || !games || games.length === 0) {
     return <p>No games available.</p>;
   }
 
@@ -93,9 +98,9 @@ const App = () => {
           <div key={ dateIndex }>
             { dateInfo.games?.length > 0 && (
               <>
-                <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games?.length > 1 ? `Today's Games` : dateInfo.currentDate === getTodaysDate() ? `Today's Game` : dateInfo.currentDate }</h1>
+                <div className="date-container">
+                  <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games?.length > 1 ? `Today's Games` : dateInfo.currentDate === getTodaysDate() ? `Today's Game` : dateInfo.currentDate }</h1></div>
                 { dateInfo.games.map((game, index) => (
-                  // need game.goals is [] .... game.goals.period .mugshot .name.default
                   <TeamComparisonComponent
                     key={ index }
                     date={ game.gameDate }
@@ -107,11 +112,11 @@ const App = () => {
                     goals={ game.goals }
                     homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
                     awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
-                    recentGameScore={ '3 - 2' } // Example score
-                    stats={ {
-                      shots: '30 - 25',
-                      possession: '60% - 40%',
-                    } }
+                    venue={ game.venue.default }
+                  // stats={ {
+                  //   shots: '30 - 25',
+                  //   possession: '60% - 40%',
+                  // } }
                   />
                 )) }
               </>

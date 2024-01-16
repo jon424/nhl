@@ -6,6 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function BasicTable({ homeTeam, awayTeam, goals }) {
     console.log('this is the goals.data: ', goals);
@@ -37,9 +39,14 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
     });
 
     console.log('rows!!!!!: ', rows);
+
+    // Use the theme and media query hook
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     return (
         <TableContainer component={ Paper }>
-            <Table sx={ { minWidth: 650 } } aria-label="simple table">
+            <Table sx={ { minWidth: 650 } }>
                 <TableHead>
                     <TableRow>
                         <TableCell>Period</TableCell>
@@ -54,20 +61,18 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
                             <TableCell component="th" scope="row">
                                 { row.period }
                             </TableCell>
-                            {/* <TableCell align="right">
-                                { homeTeam } - { row.homeScore }<br />{ awayTeam } - { row.awayScore }
-                            </TableCell> */}
-
-                            <TableCell align="left">
+                            <TableCell align={ isMobile ? 'center' : 'left' }>
                                 { row.scorers.map((scorer, index) => (
-                                    <div key={ index }>
-                                        <img src={ scorer.mugshot } alt={ scorer.name || 'Unknown' } width="30" height="30" />
-                                        { scorer.name || 'Unknown' }
+                                    <div key={ index } style={ { textAlign: isMobile ? 'center' : 'left' } }>
+                                        <img src={ scorer.mugshot } alt={ scorer.name || 'Unknown' } width="40" height="40" />
+                                        <div className="scorer-name">{ scorer.name || 'Unknown' }</div>
                                     </div>
                                 )) }
                             </TableCell>
                             <TableCell align="left">
-                                { homeTeam } - { row.homeScore }<br />{ awayTeam } - { row.awayScore }
+                                { homeTeam } - { row.homeScore }
+                                <br />
+                                { awayTeam } - { row.awayScore }
                             </TableCell>
                         </TableRow>
                     )) }

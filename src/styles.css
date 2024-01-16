@@ -2,10 +2,28 @@
     margin-top: 6rem;
 }
 
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
 .navbar-btn {
     border-radius: 0 !important;
     border-right: 1px solid white !important;
     line-height: 0.75px !important;
+}
+
+.date-container {
+    margin-left: 6rem;
+}
+
+.list-item {
+    padding-top: 32px !important;
+}
+
+.divider {
+    width: 80%;
+    margin-top: 32px;
 }
 
 .grid-container {
@@ -28,10 +46,18 @@
   thead th {
     font-weight: 600 !important;
   }
+
+  p, th, td {
+    font-size: 1rem !important;
+  }
   
   @media (max-width: 416px) {
     .grid-container {
       margin: 20px 2%;
+    }
+
+    .date-container {
+        margin-left: unset;
     }
 
     .team-info {
