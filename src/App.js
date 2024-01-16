@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
 import LoadingSpinner from './components/LoadingSpinner';
-import { getGameDetails, getTodaysGameDetails, getTeamDetails } from './api';
+import { getGameDetails, getTodaysGameDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
 
@@ -12,7 +12,7 @@ import './styles.css';
 
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
-  const [teamDetails, setTeamDetails] = useState(null);
+  // const [teamDetails, setTeamDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const games = upcomingGameDetails?.data?.games;
@@ -81,11 +81,11 @@ const App = () => {
     return <p>No games available.</p>;
   }
 
-  const getTeamFullName = (teamId) => {
-    const teamDetailsForId = teamDetails?.data?.data;
-    const matchingTeam = teamDetailsForId?.find((team) => team.id === teamId);
-    return matchingTeam?.fullName || null;
-  };
+  // const getTeamFullName = (teamId) => {
+  //   const teamDetailsForId = teamDetails?.data?.data;
+  //   const matchingTeam = teamDetailsForId?.find((team) => team.id === teamId);
+  //   return matchingTeam?.fullName || null;
+  // };
 
   console.log('Games:', games);
 
@@ -107,8 +107,10 @@ const App = () => {
                     startTime={ game.startTimeUTC }
                     homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
                     awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
-                    homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
-                    awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
+                    // homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
+                    homeTeam={ game.homeTeam?.name?.default }
+                    // awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
+                    awayTeam={ game.awayTeam?.name?.default }
                     goals={ game.goals }
                     homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
                     awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
