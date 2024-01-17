@@ -6,6 +6,8 @@ import { getGameDetails, getTodaysGameDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
 
+//try this: https://medium.com/geekculture/build-and-deploy-a-web-application-with-react-and-node-js-express-bce2c3cfec32
+
 //https://github.com/Zmalski/NHL-API-Reference
 //https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
 
