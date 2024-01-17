@@ -52,15 +52,19 @@
 import axios from 'axios';
 import { getTodaysDate } from './util/dates';
 
-const API_URL = '/api/v1'; // Change to the proxy path
+// const API_URL = '/api/v1'; // Change to the proxy path
+// const API_URL = 'https://api-web.nhle.com';
 // const API_URL = process.env.REACT_APP_API_URL;
-console.log({ API_URL });
+
+const GET_TODAYS_GAME_DETAILS = '/api/getTodaysGameDetails';
+const GET_GAME_DETAILS = '/api/getGameDetails';
+// console.log({ API_URL });
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
 
 export const getTodaysGameDetails = async () => {
     const today = getTodaysDate();
     try {
-        const res = await axios.get(`${API_URL}/score/${today}`, { followRedirects: true });
+        const res = await axios.get(`${GET_TODAYS_GAME_DETAILS}/v1/score/${today}`, { followRedirects: true });
         console.log({ res });
         const gameDetails = res.data;
         return { data: { games: [].concat(gameDetails) } };
@@ -74,7 +78,7 @@ export const getGameDetails = async (dates) => {
     try {
         const responses = await Promise.all(
             dates.map(async (date) => {
-                return axios.get(`${API_URL}/score/${date}`, { followRedirects: true });
+                return axios.get(`${GET_GAME_DETAILS}/score/${date}`, { followRedirects: true });
             })
         );
 

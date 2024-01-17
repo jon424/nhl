@@ -1,4 +1,7 @@
-export const generateDateRanges = (seasonStartDate, seasonEndDate) => {
+// Removed import statements
+// The 'formatDate' function and 'getTodaysDate' are defined within this module
+
+const generateDateRanges = (seasonStartDate, seasonEndDate) => {
     const dateRangeFromYesterday = [];
     const dateRangeFromTomorrow = [];
     const startDate = new Date(seasonStartDate);
@@ -37,7 +40,6 @@ export const generateDateRanges = (seasonStartDate, seasonEndDate) => {
     return { dateRangeFromYesterday, dateRangeFromTomorrow };
 };
 
-
 function formatDate(date) {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -45,42 +47,16 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 
-export const getTodaysDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+// Removed export statements
+
+// Added 'module.exports' to make the functions available for CommonJS
+module.exports = {
+    generateDateRanges,
+    getTodaysDate: () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    },
 };
-
-// Example usage:
-const todayDate = getTodaysDate();
-console.log(todayDate);
-
-
-// Function to check if a date is in the future
-// export const isFutureDate = (dateString) => {
-//     const currentDate = new Date();
-//     const targetDate = new Date(dateString);
-
-//     return targetDate > currentDate;
-// };
-
-// Function to check if a date is in the past
-// export const isPastDate = (dateString) => {
-//     const currentDate = new Date();
-//     const targetDate = new Date(dateString);
-
-//     return targetDate < currentDate;
-// };
-
-// Example usage:
-// const futureDate = '2024-10-10';
-// const pastDate = '2024-01-01';
-
-// console.log(isFutureDate(futureDate)); // Should return true
-// console.log(isFutureDate(pastDate));   // Should return false
-
-// console.log(isPastDate(futureDate));    // Should return false
-// console.log(isPastDate(pastDate));      // Should return true
-

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './components/NavBar';
 import TeamComparisonComponent from './components/TeamComparisonComponent';
 import LoadingSpinner from './components/LoadingSpinner';
-import { getGameDetails, getTodaysGameDetails } from './api';
+import { getTodaysGameDetails, getGameDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
 
@@ -84,38 +84,56 @@ const App = () => {
   // };
 
   console.log('Games:', games);
-
+  // console.log('Games.data.games:', games[0].data?.games);
   return (
     <>
       <Navbar onNavbarButtonClick={ handleNavbarButtonClick } />
       { loading && <LoadingSpinner /> }
       <div className="app-container">
-        { games.map((dateInfo, dateIndex) => (
-          <div key={ dateIndex }>
-            { dateInfo.games?.length > 0 && (
+        { games.map((game, gameIndex) => (
+          <div key={ gameIndex }>
+            { game.data?.games[gameIndex]?.games?.length > 0 && (
               <>
                 <div className="date-container">
-                  <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games?.length > 1 ? `Today's Games` : dateInfo.currentDate === getTodaysDate() ? `Today's Game` : dateInfo.currentDate }</h1></div>
-                { dateInfo.games.map((game, index) => (
-                  <TeamComparisonComponent
-                    key={ index }
-                    date={ game.gameDate }
-                    startTime={ game.startTimeUTC }
-                    homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
-                    awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
-                    // homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
-                    homeTeam={ game.homeTeam?.name?.default }
-                    // awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
-                    awayTeam={ game.awayTeam?.name?.default }
-                    goals={ game.goals }
-                    homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
-                    awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
-                    venue={ game.venue.default }
-                  // stats={ {
-                  //   shots: '30 - 25',
-                  //   possession: '60% - 40%',
-                  // } }
-                  />
+                  <h1>
+                    { game.data?.games[gameIndex]?.games?.length > 1
+                      ? `Today's Games`
+                      : game.data?.games[gameIndex]?.games?.currentDate === getTodaysDate()
+                        ? `Today's Game`
+                        : game.data?.games[gameIndex]?.games?.currentDate }
+                  </h1>
+                </div>
+                { game.data?.games[gameIndex]?.games.map((innerGame, index) => (
+                  <React.Fragment key={ index }>
+                    <div>{ index }</div>
+                    <TeamComparisonComponent
+                      date={ innerGame.gameDate }
+                      startTime={ innerGame.startTimeUTC }
+                      homeTeamLogo={
+                        innerGame.homeTeam?.logo || 'defaultHomeLogoURL'
+                      }
+                      awayTeamLogo={
+                        innerGame.awayTeam?.logo || 'defaultAwayLogoURL'
+                      }
+                      homeTeam={ innerGame.homeTeam?.name?.default }
+                      awayTeam={ innerGame.awayTeam?.name?.default }
+                      goals={ innerGame.goals }
+                      homeTeamScore={
+                        innerGame.homeTeam?.score !== undefined
+                          ? innerGame.homeTeam.score
+                          : '-'
+                      }
+                      awayTeamScore={
+                        innerGame.awayTeam?.score !== undefined
+                          ? innerGame.awayTeam.score
+                          : '-'
+                      }
+                      venue={ innerGame.venue?.default }
+                    />
+                    <div style={ { border: "1px solid red" } }>
+                      { innerGame.gameDate }???
+                    </div>
+                  </React.Fragment>
                 )) }
               </>
             ) }
@@ -124,6 +142,8 @@ const App = () => {
       </div>
     </>
   );
+
+
 };
 
 export default App;
