@@ -38,7 +38,7 @@ export default function BasicTable({ homeTeam, awayTeam, goals }) {
         ];
     });
 
-    console.log('rows!!!!!: ', rows);
+    // console.log('rows!!!!!: ', rows);
 
     // Use the theme and media query hook
     const theme = useTheme();

@@ -6,6 +6,8 @@ import { getGameDetails, getTodaysGameDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
 
+// make something like this; the game summary from the boxscore endpoint: https://www.nhl.com/scores/htmlreports/20232024/GS020640.HTM
+
 //try this: https://medium.com/geekculture/build-and-deploy-a-web-application-with-react-and-node-js-express-bce2c3cfec32
 
 //https://github.com/Zmalski/NHL-API-Reference
@@ -21,8 +23,8 @@ const App = () => {
   console.log({ games });
 
   const { dateRangeFromYesterday, dateRangeFromTomorrow } = generateDateRanges('2023-10-10', '2024-04-18');
-  console.log('Date Range from Yesterday:', dateRangeFromYesterday);
-  console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
+  // console.log('Date Range from Yesterday:', dateRangeFromYesterday);
+  // console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
 
   const handleNavbarButtonClick = async (buttonText) => {
     setLoading(true);
@@ -38,7 +40,7 @@ const App = () => {
         fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
       }
 
-      console.log({ fetchGameDetails });
+      // console.log({ fetchGameDetails });
       setUpcomingGameDetails(fetchGameDetails);
     } catch (err) {
       console.error('Error fetching game details: ', err);
@@ -48,10 +50,11 @@ const App = () => {
   };
 
   useEffect(() => {
+    // TODO: maybe load the other two options for past and future games on page load and save them to state and then it will be faster loading?
     const fetchData = async () => {
       try {
         const fetchGameDetails = await getTodaysGameDetails();
-        console.log({ fetchGameDetails });
+        // console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
@@ -85,7 +88,7 @@ const App = () => {
   //   return matchingTeam?.fullName || null;
   // };
 
-  console.log('Games:', games);
+  // console.log('Games:', games);
 
   return (
     <>

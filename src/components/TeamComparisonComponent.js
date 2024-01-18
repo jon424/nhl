@@ -10,8 +10,6 @@ const TeamComparisonComponent = ({ date, startTime, homeTeamLogo, awayTeamLogo, 
   const utcTime = startTime;
   const { easternTime, pacificTime } = convertToEasternAndPacific(utcTime);
 
-  console.log('shoots? scores?: ', goals);
-
   return (
     <div className="grid-container">
       <Grid container spacing={ 3 }>

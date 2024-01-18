@@ -61,7 +61,7 @@ export const getTodaysGameDetails = async () => {
     const today = getTodaysDate();
     try {
         const res = await axios.get(`${API_URL}/score/${today}`, { followRedirects: true });
-        console.log({ res });
+        // console.log({ res });
         const gameDetails = res.data;
         return { data: { games: [].concat(gameDetails) } };
     } catch (err) {
