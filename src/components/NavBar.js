@@ -7,6 +7,7 @@ import {
     Drawer,
     List,
     ListItem,
+    ButtonGroup,
     Button,
     CssBaseline,
     useMediaQuery,
@@ -54,25 +55,14 @@ const Navbar = ({ onNavbarButtonClick }) => {
 
                     </Typography>
                     { !isMobile && (
-                        <>
-                            <Button
-                                className="navbar-btn"
-                                color="inherit"
-                                onClick={ handleHomeButtonClick }
-                            >
-                                Home
-                            </Button>
-                            <Button onClick={ () => onNavbarButtonClick('Today') } className="navbar-btn" color="inherit">Today's Games</Button>
-                            <Button onClick={ () => onNavbarButtonClick('Previous') } className="navbar-btn" color="inherit">Previous Games</Button>
-                            <Button onClick={ () => onNavbarButtonClick('Future') } className="navbar-btn" color="inherit">Future Games</Button>
-                            <Button className="navbar-btn" color="inherit" component="a" href="https://github.com/jon424/nhl" target="_blank" rel="noopener noreferrer">
-                                GitHub
-                            </Button>
-                            <Button className="navbar-btn" color="inherit" component="a" href="https://www.buymeacoffee.com/jonathanja7" target="_blank" rel="noopener noreferrer">
-                                Buy Me A Coffee
-                            </Button>
-
-                        </>
+                        <ButtonGroup variant="text" color="inherit">
+                            <Button onClick={ handleHomeButtonClick }>Home</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Today') }>Today's Games</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Previous') }>Previous Games</Button>
+                            <Button onClick={ () => onNavbarButtonClick('Future') }>Future Games</Button>
+                            <Button component="a" href="https://github.com/jon424/nhl" target="_blank" rel="noopener noreferrer">GitHub</Button>
+                            <Button component="a" href="https://www.buymeacoffee.com/jonathanja7" target="_blank" rel="noopener noreferrer">Buy Me A Coffee</Button>
+                        </ButtonGroup>
                     ) }
                 </Toolbar>
             </AppBar>
@@ -83,28 +73,13 @@ const Navbar = ({ onNavbarButtonClick }) => {
                 sx={ { width: '240px' } }
             >
                 <List>
-                    {/* { ['Home', `Today's Games`, `Previous Games`, `Future Games`, `GitHub`, `Buy Me A Coffee`].map((text, index) => (
-                        <ListItem button key={ text } onClick={ () => { toggleDrawer(false); onNavbarButtonClick(text); } }>
-                            <ListItemText primary={ text } />
-                        </ListItem>
-                    )) } */}
-                    <ListItem
-                        className="navbar-btn"
-                        color="inherit"
-                        onClick={ handleHomeButtonClick }
-                    >
-                        Home
-                    </ListItem>
-                    <ListItem onClick={ () => onNavbarButtonClick('Today') } className="navbar-btn list-item" color="inherit">Today's Games</ListItem>
-                    <ListItem onClick={ () => onNavbarButtonClick('Previous') } className="navbar-btn list-item" color="inherit">Previous Games</ListItem>
-                    <ListItem onClick={ () => onNavbarButtonClick('Future') } className="navbar-btn list-item" color="inherit">Future Games</ListItem>
+                    <ListItem onClick={ handleHomeButtonClick }>Home</ListItem>
+                    <ListItem onClick={ () => onNavbarButtonClick('Today') }>Today's Games</ListItem>
+                    <ListItem onClick={ () => onNavbarButtonClick('Previous') }>Previous Games</ListItem>
+                    <ListItem onClick={ () => onNavbarButtonClick('Future') }>Future Games</ListItem>
                     <hr className="divider" />
-                    <ListItem className="navbar-btn list-item" color="inherit" component="a" href="https://github.com/jon424/nhl" target="_blank" rel="noopener noreferrer">
-                        GitHub
-                    </ListItem>
-                    <ListItem className="navbar-btn list-item" color="inherit" component="a" href="https://www.buymeacoffee.com/jonathanja7" target="_blank" rel="noopener noreferrer">
-                        Buy Me A Coffee
-                    </ListItem>
+                    <ListItem component="a" href="https://github.com/jon424/nhl" target="_blank" rel="noopener noreferrer">GitHub</ListItem>
+                    <ListItem component="a" href="https://www.buymeacoffee.com/jonathanja7" target="_blank" rel="noopener noreferrer">Buy Me A Coffee</ListItem>
                 </List>
             </Drawer>
         </>

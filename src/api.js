@@ -79,13 +79,16 @@ export const getGameDetails = async (dates) => {
         );
 
         const gameDetails = responses.map((response) => response.data);
-
+        console.log('deeeeeetz: ', gameDetails);
         return { data: { games: [].concat(...gameDetails) } };
     } catch (err) {
         console.error('Error fetching Game Details data: ', err);
         throw err;
     }
 };
+
+// get boxscore details to get goalie details/etc... https://api-web.nhle.com/v1/gamecenter/2023020640/boxscore
+// need to get the game ID and then run that request ^^^ and iterate through and find goalie details
 
 export const getTeamDetails = async () => {
     try {
