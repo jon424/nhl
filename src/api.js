@@ -1,101 +1,49 @@
-// import axios from 'axios';
-// import { getTodaysDate } from './util/dates';
-
-// const API_URL = 'https://api-web.nhle.com/v1';
-// const TEAM_DETAILS_URL = 'https://api.nhle.com';
-
-// export const getTodaysGameDetails = async () => {
-//     const today = getTodaysDate();
-//     try {
-//         const res = await axios.get(`${API_URL}/score/${today}`, { followRedirects: true });
-//         console.log({ res });
-//         // return res;
-//         const gameDetails = res.data;
-//         return { data: { games: [].concat(gameDetails) } };
-//     } catch (err) {
-//         console.error('Error fetching Game Details data: ', err);
-//         throw err;
-//     }
-// };
-
-// export const getGameDetails = async (dates) => {
-//     try {
-//         // Use Promise.all to make parallel requests for each date
-//         const responses = await Promise.all(
-//             dates.map(async (date) => {
-//                 return axios.get(`${API_URL}/score/${date}`, { followRedirects: true });
-//             })
-//         );
-
-//         // Extract the data from each response
-//         const gameDetails = responses.map((response) => response.data);
-
-//         // Return the compiled game details
-//         return { data: { games: [].concat(...gameDetails) } };
-//     } catch (err) {
-//         console.error('Error fetching Game Details data: ', err);
-//         throw err;
-//     }
-// };
-
-
-// export const getTeamDetails = async () => {
-//     try {
-//         const res = await axios.get(`${TEAM_DETAILS_URL}/stats/rest/en/team`);
-//         return res;
-//     } catch (err) {
-//         console.error('Error fetching Team Details data: ', err);
-//         throw err;
-//     }
-// };
-
 import axios from 'axios';
 import { getTodaysDate } from './util/dates';
 
 const API_URL = '/api/v1'; // Change to the proxy path
-// const API_URL = process.env.REACT_APP_API_URL;
-console.log({ API_URL });
 const TEAM_DETAILS_URL = 'https://api.nhle.com';
 
+/**
+ * Fetch data from a given URL and handle errors.
+ * @param {string} url - The URL to fetch data from.
+ * @returns {Promise<any>} - The response data.
+ */
+const fetchData = async (url) => {
+    try {
+        const response = await axios.get(url, { followRedirects: true });
+        return response.data;
+    } catch (err) {
+        console.error(`Error fetching data from ${url}: `, err);
+        throw err;
+    }
+};
+
+/**
+ * Get today's game details.
+ * @returns {Promise<{ data: { games: any[] } }>}
+ */
 export const getTodaysGameDetails = async () => {
     const today = getTodaysDate();
-    try {
-        const res = await axios.get(`${API_URL}/score/${today}`, { followRedirects: true });
-        // console.log({ res });
-        const gameDetails = res.data;
-        return { data: { games: [].concat(gameDetails) } };
-    } catch (err) {
-        console.error('Error fetching Game Details data: ', err);
-        throw err;
-    }
+    const gameDetails = await fetchData(`${API_URL}/score/${today}`);
+    return { data: { games: [gameDetails] } }; // Directly returning an array
 };
 
+/**
+ * Get game details for multiple dates.
+ * @param {string[]} dates - Array of dates to fetch game details for.
+ * @returns {Promise<{ data: { games: any[] } }>}
+ */
 export const getGameDetails = async (dates) => {
-    try {
-        const responses = await Promise.all(
-            dates.map(async (date) => {
-                return axios.get(`${API_URL}/score/${date}`, { followRedirects: true });
-            })
-        );
-
-        const gameDetails = responses.map((response) => response.data);
-        console.log('deeeeeetz: ', gameDetails);
-        return { data: { games: [].concat(...gameDetails) } };
-    } catch (err) {
-        console.error('Error fetching Game Details data: ', err);
-        throw err;
-    }
+    console.log({ dates });
+    const responses = await Promise.all(dates.map(date => fetchData(`${API_URL}/score/${date}`)));
+    return { data: { games: [...responses] } }; // Use spread to merge responses directly
 };
 
-// get boxscore details to get goalie details/etc... https://api-web.nhle.com/v1/gamecenter/2023020640/boxscore
-// need to get the game ID and then run that request ^^^ and iterate through and find goalie details
-
+/**
+ * Get team details.
+ * @returns {Promise<any>}
+ */
 export const getTeamDetails = async () => {
-    try {
-        const res = await axios.get(`${TEAM_DETAILS_URL}/stats/rest/en/team`);
-        return res;
-    } catch (err) {
-        console.error('Error fetching Team Details data: ', err);
-        throw err;
-    }
+    return fetchData(`${TEAM_DETAILS_URL}/stats/rest/en/team`);
 };

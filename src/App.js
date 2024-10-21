@@ -6,29 +6,17 @@ import { getGameDetails, getTodaysGameDetails } from './api';
 import { generateDateRanges, getTodaysDate } from './util/dates';
 import './styles.css';
 
-// make something like this; the game summary from the boxscore endpoint: https://www.nhl.com/scores/htmlreports/20232024/GS020640.HTM
-
-//try this: https://medium.com/geekculture/build-and-deploy-a-web-application-with-react-and-node-js-express-bce2c3cfec32
-
-//https://github.com/Zmalski/NHL-API-Reference
-//https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md
-
-
 const App = () => {
   const [upcomingGameDetails, setUpcomingGameDetails] = useState(null);
-  // const [teamDetails, setTeamDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const games = upcomingGameDetails?.data?.games;
+  const games = upcomingGameDetails?.data?.games || [];
   console.log({ games });
 
-  const { dateRangeFromYesterday, dateRangeFromTomorrow } = generateDateRanges('2023-10-10', '2024-04-18');
-  // console.log('Date Range from Yesterday:', dateRangeFromYesterday);
-  // console.log('Date Range from Tomorrow:', dateRangeFromTomorrow);
+  const { dateRangeFromYesterday, dateRangeFromTomorrow } = generateDateRanges('2024-10-10', '2025-04-18');
 
   const handleNavbarButtonClick = async (buttonText) => {
     setLoading(true);
-
     try {
       let fetchGameDetails;
 
@@ -40,7 +28,6 @@ const App = () => {
         fetchGameDetails = await getGameDetails(dateRangeFromTomorrow);
       }
 
-      // console.log({ fetchGameDetails });
       setUpcomingGameDetails(fetchGameDetails);
     } catch (err) {
       console.error('Error fetching game details: ', err);
@@ -50,11 +37,9 @@ const App = () => {
   };
 
   useEffect(() => {
-    // TODO: maybe load the other two options for past and future games on page load and save them to state and then it will be faster loading?
     const fetchData = async () => {
       try {
         const fetchGameDetails = await getTodaysGameDetails();
-        // console.log({ fetchGameDetails });
         setUpcomingGameDetails(fetchGameDetails);
       } catch (err) {
         console.error('Error fetching upcoming game details: ', err);
@@ -63,44 +48,28 @@ const App = () => {
       }
     };
 
-    // API is down for this :-(
-    // const fetchTeamDetails = async () => {
-    //   try {
-    //     const fetchTeamDetails = await getTeamDetails();
-    //     setTeamDetails(fetchTeamDetails);
-    //   } catch (err) {
-    //     console.error('Error fetching team details: ', err);
-    //   }
-    // };
-
-    // fetchTeamDetails();
-
     fetchData();
   }, []);
 
-  if (!upcomingGameDetails || !upcomingGameDetails.data || !games || games.length === 0) {
-    return <p>No games available.</p>;
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
-  // const getTeamFullName = (teamId) => {
-  //   const teamDetailsForId = teamDetails?.data?.data;
-  //   const matchingTeam = teamDetailsForId?.find((team) => team.id === teamId);
-  //   return matchingTeam?.fullName || null;
-  // };
-
-  // console.log('Games:', games);
+  if (!upcomingGameDetails || !upcomingGameDetails.data || !games.length) {
+    return <p>No games available.</p>;
+  }
 
   return (
     <>
       <Navbar onNavbarButtonClick={ handleNavbarButtonClick } />
-      { loading && <LoadingSpinner /> }
       <div className="app-container">
         { games.map((dateInfo, dateIndex) => (
           <div key={ dateIndex }>
             { dateInfo.games?.length > 0 && (
               <>
                 <div className="date-container">
-                  <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games?.length > 1 ? `Today's Games` : dateInfo.currentDate === getTodaysDate() ? `Today's Game` : dateInfo.currentDate }</h1></div>
+                  <h1>{ dateInfo.currentDate === getTodaysDate() && dateInfo.games.length > 1 ? `Today's Games` : dateInfo.currentDate }</h1>
+                </div>
                 { dateInfo.games.map((game, index) => (
                   <TeamComparisonComponent
                     key={ index }
@@ -108,18 +77,12 @@ const App = () => {
                     startTime={ game.startTimeUTC }
                     homeTeamLogo={ game.homeTeam?.logo || 'defaultHomeLogoURL' }
                     awayTeamLogo={ game.awayTeam?.logo || 'defaultAwayLogoURL' }
-                    // homeTeam={ getTeamFullName(game.homeTeam?.id) || game.homeTeam?.name?.default }
                     homeTeam={ game.homeTeam?.name?.default }
-                    // awayTeam={ getTeamFullName(game.awayTeam?.id) || game.awayTeam?.name?.default }
                     awayTeam={ game.awayTeam?.name?.default }
                     goals={ game.goals }
                     homeTeamScore={ game.homeTeam?.score !== undefined ? game.homeTeam.score : '-' }
                     awayTeamScore={ game.awayTeam?.score !== undefined ? game.awayTeam.score : '-' }
                     venue={ game.venue.default }
-                  // stats={ {
-                  //   shots: '30 - 25',
-                  //   possession: '60% - 40%',
-                  // } }
                   />
                 )) }
               </>

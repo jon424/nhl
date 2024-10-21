@@ -10,7 +10,6 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function BasicTable({ homeTeam, awayTeam, goals }) {
-    console.log('this is the goals.data: ', goals);
 
     // Group goals by period
     const groupedGoals = goals?.reduce((acc, goal) => {
